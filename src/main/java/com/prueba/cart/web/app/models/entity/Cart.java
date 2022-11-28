@@ -17,7 +17,7 @@ public class Cart implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long id;
-	public Product[] products;
+	public Long [] products;
 
 	public Long getId() {
 		return id;
@@ -27,11 +27,11 @@ public class Cart implements Serializable {
 		this.id = id;
 	}
 
-	public Product[] getProducts() {
+	public Long[] getProducts() {
 		return products;
 	}
 
-	public void setProducts(Product[] products) {
+	public void setProducts(Long[] products) {
 		this.products = products;
 	}
 
