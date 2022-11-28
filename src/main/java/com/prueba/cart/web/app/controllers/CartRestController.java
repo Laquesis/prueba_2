@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import com.prueba.cart.web.app.models.entity.Cart;
 import com.prueba.cart.web.app.models.entity.Product;
 import com.prueba.cart.web.app.models.services.ICartService;
+import com.prueba.cart.web.app.models.services.IProductService;
 
 @CrossOrigin(origins = { "http://localhost:8080" })
 @RestController
@@ -25,42 +26,46 @@ public class CartRestController {
 
 	@Autowired
 	private ICartService cartService;
-
+	private IProductService productService;
 	// Listado de todos los carritos
 	@GetMapping("/carts")
 	public List<Cart> indexCarts() {
 		return cartService.findAll();
 	}
+	
+	@GetMapping("/products")
+	public List<Product> indexProducts() {
+		return productService.findAll();
+	}
 
 	// Ver un carrito
 	@GetMapping("/carts/{id}")
 	public Cart showCartById(@PathVariable Long id) {
-		Cart currentCart = this.cartService.findById(id);
-		return currentCart;
+		return cartService.findById(id);
+		
 	}
 
 	// Ver una lista de productos de un carrito
 	@GetMapping("/carts/{id}/products")
-	public List<Product> showProductsListOfCart(@PathVariable Long id) {
-
-		return this.cartService.listProductOfCart(id);
+	public List<Product> showProductsListOfCart(@PathVariable Long id) {		
+		return cartService.listProductOfCart(id);	
 
 	}
 
 	// Crear un carrito
 	@PostMapping("/carts")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cart createCart(@RequestBody Cart cart) {
-		this.cartService.save(cart);
-		return cart;
+	public void createCart(@RequestBody Cart cart) {
+		 cartService.save(cart);
+		
 	}
 
 	// Update un carrito
 	@PutMapping("/carts/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cart updateCart(@PathVariable Long id, @RequestBody Cart cart) {
-		this.cartService.update(id, cart);
-		return cart;
+	public void updateCart(@PathVariable Long id, @RequestBody Cart cart) {
+		cartService.update(id, cart);
+		
 	}
 
 	// Borrar carrito
@@ -74,14 +79,14 @@ public class CartRestController {
 	// Añadir producto
 	@PostMapping("/carts/{id}/products")
 	public void addProduct(@PathVariable Long id, @RequestBody Long product) {
-		this.cartService.addProduct(id, product);
+		cartService.addProduct(id, product);
 
 	}
 
 	// Total amount de la lista de productos
 	@GetMapping("/carts/{id}/products/totalAmount")
 	public Double getAllAmounts(@PathVariable Long id) {
-		return this.cartService.getTotalAmounts(id);
+		return cartService.getTotalAmounts(id);
 
 	}
 

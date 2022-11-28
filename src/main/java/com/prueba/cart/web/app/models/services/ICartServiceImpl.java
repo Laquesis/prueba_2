@@ -48,7 +48,7 @@ public class ICartServiceImpl implements ICartService {
 	@Transactional
 	public Cart findById(Long id) {
 
-		return this.findById(id);
+		return cartDao.findById(id).orElse(null);
 
 	}
 
@@ -63,7 +63,7 @@ public class ICartServiceImpl implements ICartService {
 	@Transactional
 	public void addProduct(Long cartId, Long productId) {
 
-		Cart savedCart = this.findById(cartId);
+		Cart savedCart = cartDao.findById(cartId).orElse(null);
 		Long[] list = savedCart.getProducts();
 		ArrayList<Long> listIdProductInCart = new ArrayList<Long>(Arrays.asList(list));
 		listIdProductInCart.add(productId);
@@ -72,12 +72,12 @@ public class ICartServiceImpl implements ICartService {
 		this.update(cartId, savedCart);
 
 	}
-
+	
 	@Override
 	@Transactional
 	public List<Product> listProductOfCart(Long cartId) {
-		Product product;
-		Cart savedCart = this.findById(cartId);
+	
+		Cart savedCart = cartDao.findById(cartId).orElse(null);
 		Long[] list = savedCart.getProducts();
 		List<Product> listTotal = new ArrayList<Product>();
 
@@ -85,7 +85,7 @@ public class ICartServiceImpl implements ICartService {
 
 		for (Long productId : listIdProductInCart) {
 
-			product = productDao.findById(productId).orElse(null);
+			Product product = productDao.findById(productId).orElse(null);
 
 			listTotal.add(product);
 		}
@@ -114,5 +114,6 @@ public class ICartServiceImpl implements ICartService {
 		return totalAmounts;
 
 	}
+	
 
 }
