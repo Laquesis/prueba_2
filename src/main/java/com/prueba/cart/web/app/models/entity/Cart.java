@@ -20,7 +20,6 @@ public class Cart implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long id;
 	public Long[] products;
-	public Double totalAmount;
 
 	public Long getId() {
 		return id;
@@ -38,12 +37,6 @@ public class Cart implements Serializable {
 		this.products = productId;
 	}
 
-	public Double getTotalAmount() {
-		return totalAmount;
-	}
 
-	public void setTotalAmount(Double totalAmount) {
-		this.totalAmount = totalAmount;
-	}
 
 }

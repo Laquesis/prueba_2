@@ -32,11 +32,6 @@ public class CartRestController {
 	public List<Cart> indexCarts() {
 		return cartService.findAll();
 	}
-	
-	@GetMapping("/products")
-	public List<Product> indexProducts() {
-		return productService.findAll();
-	}
 
 	// Ver un carrito
 	@GetMapping("/carts/{id}")
