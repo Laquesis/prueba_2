@@ -18,7 +18,6 @@ import com.prueba.cart.web.app.models.entity.Cart;
 import com.prueba.cart.web.app.models.entity.Product;
 import com.prueba.cart.web.app.models.services.ICartService;
 
-
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/api")
