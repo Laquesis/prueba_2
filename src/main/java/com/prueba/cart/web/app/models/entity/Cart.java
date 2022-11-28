@@ -1,7 +1,6 @@
 package com.prueba.cart.web.app.models.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

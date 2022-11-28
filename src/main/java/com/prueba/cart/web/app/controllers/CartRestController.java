@@ -17,7 +17,7 @@ import org.springframework.http.HttpStatus;
 import com.prueba.cart.web.app.models.entity.Cart;
 import com.prueba.cart.web.app.models.entity.Product;
 import com.prueba.cart.web.app.models.services.ICartService;
-import com.prueba.cart.web.app.models.services.IProductService;
+
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
@@ -26,7 +26,6 @@ public class CartRestController {
 
 	@Autowired
 	private ICartService cartService;
-	private IProductService productService;
 
 	// Listado de todos los carritos
 	@GetMapping("/carts")
@@ -37,7 +36,16 @@ public class CartRestController {
 	// Ver un carrito
 	@GetMapping("/carts/{id}")
 	public Cart showCartById(@PathVariable Long id) {
-		return this.cartService.findById(id);
+		Cart currentCart = this.cartService.findById(id);
+		return currentCart;
+	}
+
+	// Ver una lista de productos de un carrito
+	@GetMapping("/carts/{id}/products")
+	public List<Product> showProductsListOfCart(@PathVariable Long id) {
+
+		return this.cartService.listProductOfCart(id);
+
 	}
 
 	// Crear un carrito
@@ -47,31 +55,33 @@ public class CartRestController {
 		this.cartService.save(cart);
 		return cart;
 	}
-	//Update un carrito
+
+	// Update un carrito
 	@PutMapping("/carts/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Cart updateCart(@PathVariable Long id, @RequestBody Cart cart) {
 		this.cartService.update(id, cart);
 		return cart;
 	}
-	
-	//Borrar carrito
+
+	// Borrar carrito
 	@DeleteMapping("/carts/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
 		Cart currentCart = this.cartService.findById(id);
 		this.cartService.delete(currentCart);
 	}
-	
-	//Añadir producto
+
+	// Añadir producto
 	@PostMapping("/carts/{id}/products")
 	public void addProduct(@PathVariable Long id, @RequestBody Long product) {
 		this.cartService.addProduct(id, product);
 
 	}
-	//Total amount de la lista de productos
+
+	// Total amount de la lista de productos
 	@GetMapping("/carts/{id}/products/totalAmount")
-	public Double getAllTransactionFees(@PathVariable Long id) {
+	public Double getAllAmounts(@PathVariable Long id) {
 		return this.cartService.getTotalAmounts(id);
 
 	}

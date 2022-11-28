@@ -45,7 +45,9 @@ public class ICartServiceImpl implements ICartService {
 	@Override
 	@Transactional
 	public Cart findById(Long id) {
+
 		return cartService.findById(id);
+
 	}
 
 	@Override
@@ -60,14 +62,33 @@ public class ICartServiceImpl implements ICartService {
 	public void addProduct(Long cartId, Long productId) {
 
 		Cart savedCart = this.findById(cartId);
-		Long [] list=savedCart.getProducts();
-		ArrayList <Long> listIdProductInCart =new ArrayList<Long>(Arrays.asList(list));  		
+		Long[] list = savedCart.getProducts();
+		ArrayList<Long> listIdProductInCart = new ArrayList<Long>(Arrays.asList(list));
 		listIdProductInCart.add(productId);
-		list=(listIdProductInCart).toArray(list);
+		list = (listIdProductInCart).toArray(list);
 		savedCart.setProducts(list);
 		this.update(cartId, savedCart);
-	
 
+	}
+
+	@Override
+	@Transactional
+	public List<Product> listProductOfCart(Long cartId) {
+		Product product;
+		Cart savedCart = this.findById(cartId);
+		Long[] list = savedCart.getProducts();
+		List<Product> listTotal = new ArrayList<Product>();
+
+		ArrayList<Long> listIdProductInCart = new ArrayList<Long>(Arrays.asList(list));
+
+		for (Long productId : listIdProductInCart) {
+
+			product = productService.findById(productId);
+
+			listTotal.add(product);
+		}
+
+		return listTotal;
 	}
 
 	@Override
@@ -75,16 +96,16 @@ public class ICartServiceImpl implements ICartService {
 
 		Product product;
 		Cart savedCart = this.findById(cartId);
-		Long [] list=savedCart.getProducts();
-		
-		ArrayList <Long> listIdProductInCart =new ArrayList<Long>(Arrays.asList(list));  		
-		
+		Long[] list = savedCart.getProducts();
+
+		ArrayList<Long> listIdProductInCart = new ArrayList<Long>(Arrays.asList(list));
+
 		Double totalAmounts = 0D;
 
 		for (Long productId : listIdProductInCart) {
-			
-			product=productService.findById(productId);
-			
+
+			product = productService.findById(productId);
+
 			totalAmounts += product.getAmount();
 		}
 

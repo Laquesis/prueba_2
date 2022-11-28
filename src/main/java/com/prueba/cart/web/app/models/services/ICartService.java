@@ -23,4 +23,6 @@ public interface ICartService {
 	
 	public Double getTotalAmounts (Long cartId);
 
+	public List<Product> listProductOfCart(Long cartId);
+
 }
