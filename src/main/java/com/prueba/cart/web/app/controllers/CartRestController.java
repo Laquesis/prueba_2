@@ -65,7 +65,7 @@ public class CartRestController {
 	
 	//Añadir producto
 	@PostMapping("/carts/{id}/products")
-	public void addProduct(@PathVariable Long id, @RequestBody Product product) {
+	public void addProduct(@PathVariable Long id, @RequestBody Long product) {
 		this.cartService.addProduct(id, product);
 
 	}

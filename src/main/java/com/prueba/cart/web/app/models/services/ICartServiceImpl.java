@@ -1,6 +1,7 @@
 package com.prueba.cart.web.app.models.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,30 +57,34 @@ public class ICartServiceImpl implements ICartService {
 
 	@Override
 	@Transactional
-	public void addProduct(Long cartId, Product product) {
+	public void addProduct(Long cartId, Long productId) {
 
 		Cart savedCart = this.findById(cartId);
-		Product savedProduct = productService.findById(product.getId());
-
-		try {
-			List<Product> products = new ArrayList<Product>();
-			products.add(savedProduct);
-			savedCart.setProducts(products);
-			this.update(cartId, savedCart);
-		} catch (Exception e) {
-
-		}
+		Long [] list=savedCart.getProducts();
+		ArrayList <Long> listIdProductInCart =new ArrayList<Long>(Arrays.asList(list));  		
+		listIdProductInCart.add(productId);
+		list=(listIdProductInCart).toArray(list);
+		savedCart.setProducts(list);
+		this.update(cartId, savedCart);
+	
 
 	}
 
 	@Override
 	public Double getTotalAmounts(Long cartId) {
 
+		Product product;
 		Cart savedCart = this.findById(cartId);
-		List<Product> products = savedCart.getProducts();
+		Long [] list=savedCart.getProducts();
+		
+		ArrayList <Long> listIdProductInCart =new ArrayList<Long>(Arrays.asList(list));  		
+		
 		Double totalAmounts = 0D;
 
-		for (Product product : products) {
+		for (Long productId : listIdProductInCart) {
+			
+			product=productService.findById(productId);
+			
 			totalAmounts += product.getAmount();
 		}
 

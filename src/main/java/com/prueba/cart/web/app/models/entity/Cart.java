@@ -19,21 +19,9 @@ public class Cart implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long id;
-	public List<Product> products;
+	public Long [] products;
 	public Double totalAmount;
 
-	
-
-	public Cart() {
-		super();
-	}
-
-	public Cart(Long id, List<Product> products, Double totalAmount) {
-		super();
-		this.id = id;
-		this.products = products;
-		this.totalAmount = totalAmount;
-	}
 
 	public Long getId() {
 		return id;
@@ -43,12 +31,12 @@ public class Cart implements Serializable {
 		this.id = id;
 	}
 
-	public List<Product> getProducts() {
+	public Long[] getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setProducts(Long [] productId) {
+		this.products = productId;
 	}
 
 	public Double getTotalAmount() {

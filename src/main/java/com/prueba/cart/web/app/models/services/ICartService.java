@@ -19,7 +19,7 @@ public interface ICartService {
 
 	public void delete(Cart cart);
 	
-	public void addProduct(Long cartId, Product product);
+	public void addProduct(Long cartId, Long productId);
 	
 	public Double getTotalAmounts (Long cartId);
 
