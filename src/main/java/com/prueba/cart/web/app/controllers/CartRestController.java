@@ -63,13 +63,13 @@ public class CartRestController {
 		this.cartService.delete(currentCart);
 	}
 	
-	//
+	//Añadir producto
 	@PostMapping("/carts/{id}/products")
 	public void addProduct(@PathVariable Long id, @RequestBody Product product) {
 		this.cartService.addProduct(id, product);
 
 	}
-
+	//Total amount de la lista de productos
 	@GetMapping("/carts/{id}/products/totalAmount")
 	public Double getAllTransactionFees(@PathVariable Long id) {
 		return this.cartService.getTotalAmounts(id);

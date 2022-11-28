@@ -76,9 +76,7 @@ public class ICartServiceImpl implements ICartService {
 	public Double getTotalAmounts(Long cartId) {
 
 		Cart savedCart = this.findById(cartId);
-
 		List<Product> products = savedCart.getProducts();
-
 		Double totalAmounts = 0D;
 
 		for (Product product : products) {
