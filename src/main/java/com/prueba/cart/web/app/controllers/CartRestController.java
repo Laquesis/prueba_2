@@ -47,21 +47,23 @@ public class CartRestController {
 		this.cartService.save(cart);
 		return cart;
 	}
-
+	//Update un carrito
 	@PutMapping("/carts/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Cart updateCart(@PathVariable Long id, @RequestBody Cart cart) {
 		this.cartService.update(id, cart);
 		return cart;
 	}
-
+	
+	//Borrar carrito
 	@DeleteMapping("/carts/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
 		Cart currentCart = this.cartService.findById(id);
 		this.cartService.delete(currentCart);
 	}
-
+	
+	//
 	@PostMapping("/carts/{id}/products")
 	public void addProduct(@PathVariable Long id, @RequestBody Product product) {
 		this.cartService.addProduct(id, product);
