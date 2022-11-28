@@ -1,6 +1,8 @@
 package com.prueba.cart.web.app.models.entity;
 
 import java.io.Serializable;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +19,21 @@ public class Cart implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long id;
-	public Long [] products;
+	public List<Product> products;
+	public Double totalAmount;
+
+	
+
+	public Cart() {
+		super();
+	}
+
+	public Cart(Long id, List<Product> products, Double totalAmount) {
+		super();
+		this.id = id;
+		this.products = products;
+		this.totalAmount = totalAmount;
+	}
 
 	public Long getId() {
 		return id;
@@ -27,12 +43,21 @@ public class Cart implements Serializable {
 		this.id = id;
 	}
 
-	public Long[] getProducts() {
+	public List<Product> getProducts() {
 		return products;
 	}
 
-	public void setProducts(Long[] products) {
+	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
+
+	public Double getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(Double totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+	
 
 }

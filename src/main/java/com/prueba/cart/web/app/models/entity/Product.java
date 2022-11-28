@@ -21,6 +21,8 @@ public class Product implements Serializable {
 	private Long id;
 	private String description;
 	private double amount;
+	
+	
 
 	public Long getId() {
 		return id;
