@@ -55,8 +55,7 @@ public class ICartServiceImpl implements ICartService {
 	@Override
 	@Transactional
 	public void delete(Long id) {
-		Cart cart = cartDao.findById(id).orElse(null);
-		cartDao.delete(cart);
+		cartDao.deleteById(id);
 
 	}
 

@@ -159,15 +159,47 @@ public class CartRestController {
 	// Añadir producto
 	@PostMapping("/carts/{id}/products")
 	public ResponseEntity<?> addProduct(@PathVariable Long id, @RequestBody Long product) {
-		cartService.addProduct(id, product);
-		return new ResponseEntity("producto añadido", HttpStatus.OK);
+		Map<String, Object> res = new HashMap<>();
+		try {
+			cartService.addProduct(id, product);
+		} catch (DataAccessException e) {
+			res.put("message", "No se pudo añadir en la bbdd");
+			res.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(res, HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		res.put("message", "Producto añadido éxitosamente");
+		res.put("producto", product);
+
+		return new ResponseEntity<Map<String, Object>>(res, HttpStatus.CREATED);
 
 	}
 
 	// Total amount de la lista de productos
 	@GetMapping("/carts/{id}/products/totalAmount")
-	public Double getAllAmounts(@PathVariable Long id) {
-		return cartService.getTotalAmounts(id);
+	public ResponseEntity<?> getAllAmounts(@PathVariable Long id) {
+
+		Double totalAmount = null;
+		Map<String, Object> res = new HashMap<>();
+		try {
+
+			totalAmount = cartService.getTotalAmounts(id);
+		} catch (DataAccessException e) {
+
+			res.put("message", "Error en la consulta en la bbdd");
+			res.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(res, HttpStatus.NOT_FOUND);
+
+		}
+
+		if (totalAmount == null) {
+
+			res.put("message", "El carrito Id:".concat(id.toString().concat("no existe")));
+			return new ResponseEntity<Map<String, Object>>(res, HttpStatus.NOT_FOUND);
+
+		}
+
+		return new ResponseEntity<Double>(totalAmount, HttpStatus.OK);
 
 	}
 
