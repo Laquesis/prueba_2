@@ -61,20 +61,6 @@ public class ICartServiceImpl implements ICartService {
 
 	@Override
 	@Transactional
-	public Cart addProduct(Long cartId, Long productId) {
-
-		Cart savedCart = cartDao.findById(cartId).orElse(null);
-		Long[] list = savedCart.getProducts();
-		ArrayList<Long> listIdProductInCart = new ArrayList<Long>(Arrays.asList(list));
-		listIdProductInCart.add(productId);
-		list = (listIdProductInCart).toArray(list);
-		savedCart.setProducts(list);
-		return cartDao.save(savedCart);
-
-	}
-
-	@Override
-	@Transactional
 	public List<Product> listProductOfCart(Long cartId) {
 
 		Cart savedCart = cartDao.findById(cartId).orElse(null);

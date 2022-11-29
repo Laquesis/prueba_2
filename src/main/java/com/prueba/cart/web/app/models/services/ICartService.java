@@ -15,8 +15,6 @@ public interface ICartService {
 
 	public Cart findById(Long id);
 
-	public Cart addProduct(Long cartId, Long productId);
-
 	public Double getTotalAmounts(Long cartId);
 
 	public List<Product> listProductOfCart(Long cartId);

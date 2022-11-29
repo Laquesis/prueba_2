@@ -115,7 +115,7 @@ public class CartRestController {
 
 	}
 
-	// Update un carrito
+	// Update un carrito (Añadir productos al carrito)
 	@PutMapping("/carts/{id}")
 	// @ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> updateCart(@PathVariable Long id, @RequestBody Cart cart) {
@@ -154,25 +154,6 @@ public class CartRestController {
 		}
 		res.put("message", "Carrito borrado éxitosamente");
 		return new ResponseEntity<Map<String, Object>>(res, HttpStatus.OK);
-	}
-
-	// Añadir producto
-	@PostMapping("/carts/{id}/products")
-	public ResponseEntity<?> addProduct(@PathVariable Long id, @RequestBody Long product) {
-		Map<String, Object> res = new HashMap<>();
-		try {
-			cartService.addProduct(id, product);
-		} catch (DataAccessException e) {
-			res.put("message", "No se pudo añadir en la bbdd");
-			res.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<Map<String, Object>>(res, HttpStatus.INTERNAL_SERVER_ERROR);
-
-		}
-		res.put("message", "Producto añadido éxitosamente");
-		res.put("producto", product);
-
-		return new ResponseEntity<Map<String, Object>>(res, HttpStatus.CREATED);
-
 	}
 
 	// Total amount de la lista de productos
