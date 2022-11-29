@@ -96,19 +96,19 @@ public class ICartServiceImpl implements ICartService {
 	@Override
 	public Double getTotalAmounts(Long cartId) {
 
-		Product product;
 		Cart savedCart = this.findById(cartId);
 		Long[] list = savedCart.getProducts();
 
 		ArrayList<Long> listIdProductInCart = new ArrayList<Long>(Arrays.asList(list));
 
-		Double totalAmounts = 0D;
+		Double totalAmounts = 0.0;
 
 		for (Long productId : listIdProductInCart) {
 
-			product = productDao.findById(productId).orElse(null);
+			Product product = productDao.findById(productId).orElse(null);
 
 			totalAmounts += product.getAmount();
+			
 		}
 
 		return totalAmounts;
