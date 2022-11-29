@@ -26,5 +26,5 @@ insert into carts (products)values(ARRAY[90, 91,93]);
 insert into carts (products)values(ARRAY[90, 91,93]);
 
 Pruebas realizadas con postman y en el navegador.
-Se facilita la collection de requests.
+Se facilita la collection de requests para importar en postman.
 
