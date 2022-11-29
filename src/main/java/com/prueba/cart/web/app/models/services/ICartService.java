@@ -9,18 +9,18 @@ public interface ICartService {
 
 	public List<Cart> findAll();
 
-	public void save(Cart cart);
+	public Cart save(Cart cart);
 
-	public void update(Long cartId, Cart cart);
+	public Cart update(Long cartId, Cart cart);
 
 	public Cart findById(Long id);
 
-	public void delete(Cart cart);
-
-	public void addProduct(Long cartId, Long productId);
+	public Cart addProduct(Long cartId, Long productId);
 
 	public Double getTotalAmounts(Long cartId);
 
 	public List<Product> listProductOfCart(Long cartId);
+
+	public void delete(Long id);
 
 }

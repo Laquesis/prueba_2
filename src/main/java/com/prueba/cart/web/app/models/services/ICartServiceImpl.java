@@ -3,6 +3,7 @@ package com.prueba.cart.web.app.models.services;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,19 +29,18 @@ public class ICartServiceImpl implements ICartService {
 
 	@Override
 	@Transactional
-	public void save(Cart cart) {
+	public Cart save(Cart cart) {
 
-		cartDao.save(cart);
+		return cartDao.save(cart);
 	}
 
 	@Override
 	@Transactional
-	public void update(Long cartId, Cart cart) {
+	public Cart update(Long cartId, Cart cart) {
 
-		this.findById(cartId);
-		cart.setId(cartId);
-
-		cartDao.save(cart);
+		Cart cartActual = cartDao.findById(cartId).orElse(null);
+		cartActual.setProducts(cart.getProducts());
+		return cartDao.save(cartActual);
 
 	}
 
@@ -54,14 +54,15 @@ public class ICartServiceImpl implements ICartService {
 
 	@Override
 	@Transactional
-	public void delete(Cart cart) {
+	public void delete(Long id) {
+		Cart cart = cartDao.findById(id).orElse(null);
 		cartDao.delete(cart);
 
 	}
 
 	@Override
 	@Transactional
-	public void addProduct(Long cartId, Long productId) {
+	public Cart addProduct(Long cartId, Long productId) {
 
 		Cart savedCart = cartDao.findById(cartId).orElse(null);
 		Long[] list = savedCart.getProducts();
@@ -69,14 +70,14 @@ public class ICartServiceImpl implements ICartService {
 		listIdProductInCart.add(productId);
 		list = (listIdProductInCart).toArray(list);
 		savedCart.setProducts(list);
-		this.update(cartId, savedCart);
+		return cartDao.save(savedCart);
 
 	}
-	
+
 	@Override
 	@Transactional
 	public List<Product> listProductOfCart(Long cartId) {
-	
+
 		Cart savedCart = cartDao.findById(cartId).orElse(null);
 		Long[] list = savedCart.getProducts();
 		List<Product> listTotal = new ArrayList<Product>();
@@ -108,12 +109,11 @@ public class ICartServiceImpl implements ICartService {
 			Product product = productDao.findById(productId).orElse(null);
 
 			totalAmounts += product.getAmount();
-			
+
 		}
 
 		return totalAmounts;
 
 	}
-	
 
 }

@@ -7,4 +7,6 @@ import com.prueba.cart.web.app.models.entity.Cart;
 @Repository
 public interface ICartDao extends CrudRepository<Cart, Long> {
 
+
+
 }
