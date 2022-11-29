@@ -1,4 +1,5 @@
 # prueba_2
+Creado con la Tool de Spring Boot.
 Backend CRUD que usa H2 como base de datos volátil.
 URL a la base de datos:
 
